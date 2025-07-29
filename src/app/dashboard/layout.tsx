@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair } from "next/font/google";
 
-import "./globals.css";
+import "../globals.css";
 
 const playFair = Playfair({
   subsets: ["latin"],
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={` ${playFair.className} antialiased`}>{children}</body>
+      <body className={`${playFair.className} antialiased`}>{children}</body>
     </html>
   );
 }
