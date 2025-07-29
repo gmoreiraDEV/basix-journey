@@ -5,6 +5,7 @@ import HowItWorks from "@/components/lp/how-it-works";
 import Testimonials from "@/components/lp/testimonials";
 import CTA from "@/components/lp/cta";
 import Footer from "@/components/lp/footer";
+import FAQ from "@/components/lp/faq";
 
 export default function BasixJourneyLanding() {
   return (
@@ -15,6 +16,7 @@ export default function BasixJourneyLanding() {
         <Benefites />
         <HowItWorks />
         <Testimonials />
+        <FAQ />
         <CTA />
       </main>
       <Footer />
