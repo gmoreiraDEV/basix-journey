@@ -6,9 +6,13 @@ import JourneyCard from "@/components/dashboard/journey-card";
 import EmptyState from "@/components/dashboard/empty-state";
 import Header from "@/components/dashboard/header";
 import PageHeader from "@/components/dashboard/page-header";
+import { getUserSession } from '@/lib/auth-actions'
 
-export default function Dashboard() {
+export const dynamic = 'force-dynamic'
+
+export default async function Dashboard() {
   const hasJourneys = false;
+  const user = await getUserSession()
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -93,5 +97,4 @@ export default function Dashboard() {
         )}
       </main>
     </div>
-  );
-}
+}))

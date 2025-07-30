@@ -30,4 +30,7 @@ export async function createForm(
 
   if (error) throw error;
   return data;
+  if (error) throw error;
+  return data;
 }
+

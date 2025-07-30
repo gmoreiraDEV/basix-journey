@@ -1,3 +1,8 @@
+import { redirect } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { getUserSession } from '@/lib/auth-actions'
+import { logoutAction } from './actions'
+
 import type { Metadata } from "next";
 
 import { playFair, cascadiaCode, raleway } from "@/lib/fonts";
@@ -8,11 +13,17 @@ export const metadata: Metadata = {
   description: "Basix Journey",
 };
 
-export default function RootLayout({
+export default async function DashboardLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
+  const user = await getUserSession()
+
+  if (!user) {
+    redirect('/login')
+  }
+
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${playFair.variable} ${cascadiaCode.variable} ${raleway.variable} antialiased`}>{children}</body>
