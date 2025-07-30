@@ -1,5 +1,6 @@
 import { Users, BookOpen, Heart } from "lucide-react";
 import { journeys } from "@/lib/dataMock";
+import { JourneyType } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import JourneyCard from "@/components/dashboard/journey-card";
 import EmptyState from "@/components/dashboard/empty-state";
@@ -7,7 +8,7 @@ import Header from "@/components/dashboard/header";
 import PageHeader from "@/components/dashboard/page-header";
 
 export default function Dashboard() {
-  const hasJourneys = true;
+  const hasJourneys = false;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -26,7 +27,7 @@ export default function Dashboard() {
                         Total Journeys
                       </p>
                       <p className="text-2xl font-bold text-stone-800">
-                        {journeys.length}
+                        {journeys?.length}
                       </p>
                     </div>
                     <div className="bg-olive-100 p-3 rounded-lg">
@@ -45,7 +46,8 @@ export default function Dashboard() {
                       </p>
                       <p className="text-2xl font-bold text-stone-800">
                         {journeys.reduce(
-                          (sum, journey) => sum + journey.responses,
+                          (sum, journey: JourneyType) =>
+                            sum + journey?.responses,
                           0
                         )}
                       </p>
@@ -65,7 +67,11 @@ export default function Dashboard() {
                         Active Journeys
                       </p>
                       <p className="text-2xl font-bold text-stone-800">
-                        {journeys.filter((j) => j.status === "active").length}
+                        {
+                          journeys.filter(
+                            (j: JourneyType) => j.status === "active"
+                          ).length
+                        }
                       </p>
                     </div>
                     <div className="bg-olive-100 p-3 rounded-lg">
@@ -77,8 +83,8 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {journeys.map((journey) => (
-                <JourneyCard key={journey.id} journey={journey} />
+              {journeys.map((journey: JourneyType) => (
+                <JourneyCard key={journey?.id} journey={journey} />
               ))}
             </div>
           </>

@@ -1,7 +1,12 @@
+"use client";
+
 import { BookOpen, Plus } from "lucide-react";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 export default function EmptyState() {
+  const router = useRouter();
+
   return (
     <div className="text-center py-16">
       <div className="mb-6">
@@ -14,7 +19,10 @@ export default function EmptyState() {
         Start building meaningful connections with your clients by creating your
         first personalized journey form.
       </p>
-      <Button className="bg-olive-600 hover:bg-olive-700 text-white">
+      <Button
+        className="bg-olive-600 hover:bg-olive-700 text-white"
+        onClick={() => router.push("/dashboard/forms/new")}
+      >
         <Plus className="h-4 w-4 mr-2" />
         Create your first journey
       </Button>

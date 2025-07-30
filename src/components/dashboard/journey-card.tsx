@@ -15,15 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
-import { journeys } from "@/lib/dataMock";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import { JourneyType } from "@/lib/types";
 
-export default function JourneyCard({
-  journey,
-}: {
-  journey: (typeof journeys)[0];
-}) {
+export default function JourneyCard({ journey }: { journey: JourneyType }) {
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 border-stone-200 hover:border-olive-200 bg-white">
       <CardHeader className="pb-3">
