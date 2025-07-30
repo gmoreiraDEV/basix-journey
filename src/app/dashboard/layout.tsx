@@ -1,11 +1,12 @@
 import { redirect } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { getUserSession } from '@/lib/auth-actions'
-import { logoutAction } from './actions'
+import { getUserSession } from '@/lib/dal/auth'
 
 import type { Metadata } from "next";
 
 import { playFair, cascadiaCode, raleway } from "@/lib/fonts";
+import PageWrapper from '@/components/dashboard/page-wrapper';
+import { logoutAction } from './actions';
+
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -26,7 +27,11 @@ export default async function DashboardLayout({
 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${playFair.variable} ${cascadiaCode.variable} ${raleway.variable} antialiased`}>{children}</body>
+      <body className={`${playFair.variable} ${cascadiaCode.variable} ${raleway.variable} antialiased`}>
+        <PageWrapper user={user} logoutAction={logoutAction}>
+          {children}
+        </PageWrapper>
+      </body>
     </html>
   );
 }

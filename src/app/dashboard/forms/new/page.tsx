@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { createForm } from "@/lib/dal/forms";
 import { TablesInsert } from "@/lib/db.types";
+import { createFormAction } from "./actions";
 
 export default function NewJourneyForm() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function NewJourneyForm() {
   } = useForm<TablesInsert<"forms">>();
 
   const onSubmit = async (values: TablesInsert<"forms">) => {
-    const form = await createForm({
+    const form = await createFormAction({
       title: values.title,
       questions: [],
       settings: values.settings,

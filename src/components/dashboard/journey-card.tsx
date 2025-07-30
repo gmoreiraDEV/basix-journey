@@ -35,10 +35,12 @@ export default function JourneyCard({ journey }: { journey: JourneyType }) {
                   <Users className="h-4 w-4 mr-1" />
                   {journey.responses} responses
                 </div>
-                <div className="flex items-center text-sm text-stone-500">
-                  <Calendar className="h-4 w-4 mr-1" />
-                  {formatDate(journey.createdAt)}
-                </div>
+                {journey.createdAt && (
+                  <div className="flex items-center text-sm text-stone-500">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {formatDate(journey.createdAt)}
+                  </div>
+                )}
               </div>
             </div>
           </div>
