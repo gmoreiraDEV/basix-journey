@@ -1,44 +1,95 @@
-import { Card } from '@/components/ui/card'
-import { getUserSession } from '@/lib/auth-actions'
+import { Users, BookOpen, Heart } from "lucide-react";
+import { journeys } from "@/lib/dataMock";
+import { JourneyType } from "@/lib/types";
+import { Card, CardContent } from "@/components/ui/card";
+import JourneyCard from "@/components/dashboard/journey-card";
+import EmptyState from "@/components/dashboard/empty-state";
+import PageHeader from "@/components/dashboard/page-header";
 
 export const dynamic = 'force-dynamic'
 
-export default async function DashboardPage() {
-    const user = await getUserSession()
+export default async function Dashboard() {
+  const hasJourneys = false;
 
-    return (
-        <div className="space-y-6">
-            <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Bem-vindo ao seu Dashboard</h2>
-                <div className="space-y-2">
-                    <p className="text-gray-600">
-                        <span className="font-medium">Email:</span> {user?.email}
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <PageHeader />
+
+      {hasJourneys ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card className="border-stone-200">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-stone-600">
+                      Total Journeys
                     </p>
-                    <p className="text-gray-600">
-                        <span className="font-medium">ID:</span> {user?.id}
+                    <p className="text-2xl font-bold text-stone-800">
+                      {journeys?.length}
                     </p>
-                    <p className="text-gray-600">
-                        <span className="font-medium">Último login:</span>{' '}
-                        {user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString('pt-BR') : 'N/A'}
-                    </p>
+                  </div>
+                  <div className="bg-olive-100 p-3 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-olive-600" />
+                  </div>
                 </div>
+              </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="p-6">
-                    <h3 className="text-xl font-bold mb-4">Seus Formulários</h3>
-                    <p className="text-gray-600">
-                        Em breve você poderá criar e gerenciar seus formulários aqui.
+            <Card className="border-stone-200">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-stone-600">
+                      Total Responses
                     </p>
-                </Card>
+                    <p className="text-2xl font-bold text-stone-800">
+                      {journeys.reduce(
+                        (sum, journey: JourneyType) =>
+                          sum + journey?.responses,
+                        0
+                      )}
+                    </p>
+                  </div>
+                  <div className="bg-olive-100 p-3 rounded-lg">
+                    <Users className="h-6 w-6 text-olive-600" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-                <Card className="p-6">
-                    <h3 className="text-xl font-bold mb-4">Respostas Recebidas</h3>
-                    <p className="text-gray-600">
-                        Aqui você verá as respostas dos seus formulários.
+            <Card className="border-stone-200">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-stone-600">
+                      Active Journeys
                     </p>
-                </Card>
-            </div>
-        </div>
-    )
+                    <p className="text-2xl font-bold text-stone-800">
+                      {
+                        journeys.filter(
+                          (j: JourneyType) => j.status === "active"
+                        ).length
+                      }
+                    </p>
+                  </div>
+                  <div className="bg-olive-100 p-3 rounded-lg">
+                    <Heart className="h-6 w-6 text-olive-600" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {journeys.map((journey: JourneyType) => (
+              <JourneyCard key={journey?.id} journey={journey} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <EmptyState />
+      )}
+    </main>
+  )
 }

@@ -13,8 +13,9 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        serif: ["Playfair Display", "serif"],
-        sans: ["Inter", "sans-serif"],
+        serif: ["var(--font-playfair)", "serif"],
+        sans: ["var(--font-raleway)", "sans-serif"],
+        code: ["var(--font-cascadia-code)", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",

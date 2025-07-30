@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Playfair } from "next/font/google";
-import "./globals.css";
 
-const playFair = Playfair({
-  subsets: ["latin"],
-});
+import { playFair, cascadiaCode, raleway } from "@/lib/fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Basix Journey",
@@ -18,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${playFair.className} antialiased`}>
-        {children}
-      </body>
+      <body className={`${playFair.variable} ${cascadiaCode.variable} ${raleway.variable} antialiased`}>{children}</body>
     </html>
   );
 }

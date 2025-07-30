@@ -1,7 +1,7 @@
 import { Heart } from "lucide-react"
 import Link from "next/link"
 import { Button } from "../ui/button"
-import { getUserSession } from "@/lib/auth-actions"
+import { getUserSession } from "@/lib/dal/auth"
 
 export default async function Header() {
   const user = await getUserSession()

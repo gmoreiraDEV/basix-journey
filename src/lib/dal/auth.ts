@@ -2,10 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { createServerSupabaseClient } from "./supabase-server";
+import { createServerSupabaseClient } from "@/lib/supabase";
 
 export async function signInAction(formData: FormData) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -31,7 +31,7 @@ export async function signInAction(formData: FormData) {
 }
 
 export async function signUpAction(formData: FormData) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -42,7 +42,7 @@ export async function signUpAction(formData: FormData) {
     password,
     options: {
       data: { name },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/callback`,
+      emailRedirectTo: `${process.env.VERCEL_URL || "http://localhost:3000"}/auth/callback`,
     },
   });
 
@@ -54,7 +54,7 @@ export async function signUpAction(formData: FormData) {
 }
 
 export async function signOutAction() {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   await supabase.auth.signOut();
 
@@ -63,7 +63,7 @@ export async function signOutAction() {
 }
 
 export async function getUserSession() {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   const {
     data: { session },

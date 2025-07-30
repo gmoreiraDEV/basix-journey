@@ -1,11 +1,11 @@
-import { createServerSupabaseClient } from "../supabase-server";
-import type { Database } from "../db.types";
+import { supabase } from "../supabase";
+import type { Tables, TablesInsert } from "../db.types";
+import { getUserSession } from "./auth";
 
-type Form = Database["public"]["Tables"]["forms"]["Row"];
-type NewForm = Database["public"]["Tables"]["forms"]["Insert"];
+type Form = Tables<"forms">;
+type NewForm = TablesInsert<"forms">;
 
 export async function getFormsByUser(userId: string): Promise<Form[]> {
-  const supabase = createServerSupabaseClient();
   const { data, error } = await supabase
     .from("forms")
     .select("*")
@@ -16,14 +16,19 @@ export async function getFormsByUser(userId: string): Promise<Form[]> {
   return data ?? [];
 }
 
-export async function createForm(form: NewForm): Promise<Form> {
-  const supabase = createServerSupabaseClient();
+export async function createForm(
+  form: Omit<NewForm, "user_id">
+): Promise<Form> {
+  const user = await getUserSession();
+  if (!user) throw new Error("Not authenticated");
+
   const { data, error } = await supabase
     .from("forms")
-    .insert(form)
+    .insert({ ...form, user_id: user.id })
     .select()
     .single();
 
   if (error) throw error;
   return data;
 }
+
