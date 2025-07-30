@@ -16,7 +16,7 @@ export default async function Dashboard() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <Header />
+      <Header user={user} />
       <main className="container mx-auto px-4 py-8">
         <PageHeader />
 
@@ -97,4 +97,5 @@ export default async function Dashboard() {
         )}
       </main>
     </div>
-}))
+  )
+}

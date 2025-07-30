@@ -1,7 +1,8 @@
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { User } from "@supabase/supabase-js";
 import { Heart } from "lucide-react";
 
-export default function Header() {
+export default function Header({ user }: { user?: User | null }) {
     return (
         <header className="bg-white border-b border-stone-200">
             <div className="container mx-auto px-4 py-4">
@@ -15,7 +16,7 @@ export default function Header() {
                     <div className="flex items-center space-x-4">
                         <Avatar className="h-8 w-8">
                             <AvatarFallback className="bg-olive-100 text-olive-600 text-sm font-semibold">
-                                JD
+                                {user?.email?.charAt(0).toUpperCase()}
                             </AvatarFallback>
                         </Avatar>
                     </div>
